@@ -71,7 +71,7 @@ const HowItWorks = () => {
         {/* Hero Section */}
         <div className="text-center mb-16">
           <h1 className="text-5xl font-bold mb-6">
-            How VibeNest Works
+            How SyncRoom Works
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Finding the perfect PG and compatible roommate has never been easier. 
@@ -99,7 +99,7 @@ const HowItWorks = () => {
 
         {/* Features Grid */}
         <div className="bg-card rounded-3xl border border-border p-8 mb-16">
-          <h2 className="text-3xl font-bold text-center mb-8">Why Choose VibeNest?</h2>
+          <h2 className="text-3xl font-bold text-center mb-8">Why Choose SyncRoom?</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {features.map((feature, index) => (
               <div key={index} className="text-center">
@@ -116,7 +116,7 @@ const HowItWorks = () => {
             Ready to Find Your Perfect Match?
           </h2>
           <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            Join thousands of happy residents who found their ideal living situation through VibeNest
+            Join thousands of happy residents who found their ideal living situation through SyncRoom
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/lifestyle-match">
