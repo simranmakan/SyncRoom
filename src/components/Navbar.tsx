@@ -1,84 +1,103 @@
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Home, Users, Heart, Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import ThemeToggle from "@/components/ThemeToggle";
+import { auth } from "../firebase";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { useToast } from "@/hooks/use-toast";
 
-const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+function Navbar() {
+  const [user, setUser] = useState<any>(null);
+  const [theme, setTheme] = useState<"light" | "dark">("light"); // Track theme
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  // Track user login state
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  // Persistent theme handling
+  useEffect(() => {
+    const storedTheme = localStorage.getItem("theme");
+    if (storedTheme === "dark" || storedTheme === "light") {
+      setTheme(storedTheme);
+      document.documentElement.classList.toggle("dark", storedTheme === "dark");
+    } else {
+      // Default theme
+      setTheme("light");
+      document.documentElement.classList.remove("dark");
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    document.documentElement.classList.toggle("dark", newTheme === "dark");
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      toast({
+        title: "Logged Out ✅",
+        description: "You have been successfully logged out.",
+      });
+      navigate("/"); // Redirect to homepage
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Logout Failed 😢",
+        description: error.message,
+      });
+    }
+  };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-border">
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center">
-              <Home className="w-6 h-6 text-white" />
-            </div>
-            <span className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-              SyncRoom
-            </span>
-          </Link>
+    <nav className="flex justify-between items-center px-6 py-3 bg-gray-50 dark:bg-gray-900 shadow-md transition-colors duration-300">
+      {/* Logo */}
+      <h1 className="font-bold text-xl text-gray-800 dark:text-gray-100">
+        SyncRoom
+      </h1>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-6">
-            <Link to="/properties" className="text-foreground hover:text-primary transition-colors">
-              Browse PGs
+      {/* Right Side Buttons */}
+      <div className="flex items-center space-x-4">
+        {!user ? (
+          <>
+            {/* Login Button */}
+            <Link to="/login">
+              <button className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 dark:hover:bg-green-700 transition">
+                Login
+              </button>
             </Link>
-            <Link to="/lifestyle-match" className="text-foreground hover:text-primary transition-colors">
-              Find Roommates
-            </Link>
-            <Link to="/how-it-works" className="text-foreground hover:text-primary transition-colors">
-              How It Works
-            </Link>
-          </div>
 
-          <div className="hidden md:flex items-center gap-4">
-            <Button variant="outline">Sign In</Button>
-            <Button variant="gradient">Get Started</Button>
-          </div>
-
-          {/* Mobile Menu Toggle */}
+            {/* Register Button */}
+            <Link to="/register">
+              <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 dark:hover:bg-blue-700 transition">
+                Register
+              </button>
+            </Link>
+          </>
+        ) : (
+          /* Logout Button */
           <button
-            className="md:hidden p-2"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            onClick={handleLogout}
+            className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 dark:hover:bg-red-700 transition"
           >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            Logout
           </button>
-        </div>
-
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 space-y-4">
-            <Link 
-              to="/properties" 
-              className="block text-foreground hover:text-primary transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Browse PGs
-            </Link>
-            <Link 
-              to="/lifestyle-match" 
-              className="block text-foreground hover:text-primary transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Find Roommates
-            </Link>
-            <Link 
-              to="/how-it-works" 
-              className="block text-foreground hover:text-primary transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              How It Works
-            </Link>
-            <div className="flex gap-4 pt-4">
-              <Button variant="outline" className="flex-1">Sign In</Button>
-              <Button variant="gradient" className="flex-1">Get Started</Button>
-            </div>
-          </div>
         )}
+
+        {/* Theme Toggle Button */}
+        <button onClick={toggleTheme} className="p-2 rounded-lg border border-gray-300 dark:border-gray-700 transition hover:bg-gray-200 dark:hover:bg-gray-800">
+          {theme === "dark" ? "☀️" : "🌙"}
+        </button>
       </div>
     </nav>
   );
-};
+}
 
 export default Navbar;

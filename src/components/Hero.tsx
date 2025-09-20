@@ -1,85 +1,101 @@
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Users, Home, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Users, Home, Sparkles, Heart } from "lucide-react";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-subtle">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-secondary/10 rounded-full blur-3xl animate-pulse delay-700" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-pulse delay-1000" />
+    <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <img
+          src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=1600&h=900&fit=crop"
+          alt="Background"
+          className="w-full h-full object-cover opacity-30 dark:opacity-40"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-white/50 to-white/80 dark:from-gray-900/70 dark:via-gray-900/60 dark:to-gray-900/80"></div>
       </div>
 
-      <div className="container mx-auto px-4 pt-24 pb-12 relative z-10">
-        <div className="max-w-5xl mx-auto text-center">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-8">
-            <Sparkles className="w-4 h-4" />
-            <span className="text-sm font-medium">Lifestyle-Based Roommate Matching</span>
-          </div>
+      {/* Hero Content */}
+      <div className="relative z-10 container mx-auto px-4 text-center">
+        {/* Heading */}
+        <h1 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-6">
+          Find Your Perfect{" "}
+          <span className="text-purple-600 dark:text-blue-400">Roommate</span> & Ideal
+          <span className="text-pink-500 dark:text-gray-300"> PG</span>
+        </h1>
+        <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-12 max-w-2xl mx-auto">
+          Discover PGs and roommates that match your lifestyle. From early birds to night owls,
+          party lovers to peace seekers – find your perfect living companion effortlessly.
+        </p>
 
-          {/* Main Heading */}
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-            Find Your Perfect
-            <span className="block bg-gradient-primary bg-clip-text text-transparent">
-              PG & Vibe Match
-            </span>
-          </h1>
-
-          <p className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-3xl mx-auto">
-            Discover PGs and roommates that match your lifestyle. From early birds to night owls, 
-            party lovers to peace seekers - find your perfect living companion with our unique vibe matching algorithm.
-          </p>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <Link to="/lifestyle-match">
-              <Button variant="gradient" size="xl" className="group">
-                Take Lifestyle Quiz
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
-            <Link to="/properties">
-              <Button variant="outline" size="xl">
-                Browse PG Listings
-              </Button>
-            </Link>
-          </div>
-
-          {/* Feature Cards */}
-          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            <div className="bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-6 hover:shadow-medium transition-all">
-              <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center mb-4 mx-auto">
-                <Users className="w-6 h-6 text-white" />
+        {/* Cards Section */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          {/* Card 1 - Find Roommates */}
+          <Link
+            to="/lifestyle-match"
+            className="bg-gradient-to-br from-purple-400 to-pink-500 dark:from-blue-800 dark:to-gray-700 
+                       rounded-2xl shadow-lg p-6 hover:scale-105 transition-transform duration-300"
+          >
+            <div className="flex flex-col items-center text-white">
+              <div className="bg-white/20 rounded-full p-4 mb-4">
+                <Users className="w-8 h-8" />
               </div>
-              <h3 className="font-semibold text-lg mb-2">Vibe Matching</h3>
-              <p className="text-muted-foreground text-sm">
-                AI-powered algorithm matches you with compatible roommates based on lifestyle preferences
+              <h3 className="text-xl font-semibold mb-2">Find Roommates</h3>
+              <p className="text-sm text-white/90">
+                Get matched with roommates who share your vibe and lifestyle.
               </p>
             </div>
+          </Link>
 
-            <div className="bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-6 hover:shadow-medium transition-all">
-              <div className="w-12 h-12 bg-gradient-secondary rounded-xl flex items-center justify-center mb-4 mx-auto">
-                <Home className="w-6 h-6 text-white" />
+          {/* Card 2 - Browse PGs */}
+          <Link
+            to="/properties"
+            className="bg-gradient-to-br from-pink-400 to-purple-500 dark:from-gray-800 dark:to-blue-700 
+                       rounded-2xl shadow-lg p-6 hover:scale-105 transition-transform duration-300"
+          >
+            <div className="flex flex-col items-center text-white">
+              <div className="bg-white/20 rounded-full p-4 mb-4">
+                <Home className="w-8 h-8" />
               </div>
-              <h3 className="font-semibold text-lg mb-2">Verified PGs</h3>
-              <p className="text-muted-foreground text-sm">
-                All properties are verified with real photos and accurate amenity information
+              <h3 className="text-xl font-semibold mb-2">Browse PG Listings</h3>
+              <p className="text-sm text-white/90">
+                Explore verified PGs with the best amenities and fair prices.
               </p>
             </div>
+          </Link>
 
-            <div className="bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-6 hover:shadow-medium transition-all">
-              <div className="w-12 h-12 bg-gradient-accent rounded-xl flex items-center justify-center mb-4 mx-auto">
-                <Sparkles className="w-6 h-6 text-white" />
+          {/* Card 3 - Smart Split */}
+          <Link
+            to="/smart-split"
+            className="bg-gradient-to-br from-blue-400 to-purple-500 dark:from-gray-700 dark:to-gray-600 
+                       rounded-2xl shadow-lg p-6 hover:scale-105 transition-transform duration-300"
+          >
+            <div className="flex flex-col items-center text-white">
+              <div className="bg-white/20 rounded-full p-4 mb-4">
+                <Sparkles className="w-8 h-8" />
               </div>
-              <h3 className="font-semibold text-lg mb-2">Smart Split</h3>
-              <p className="text-muted-foreground text-sm">
-                Automated bill splitting and expense tracking with your roommates
+              <h3 className="text-xl font-semibold mb-2">Smart Split</h3>
+              <p className="text-sm text-white/90">
+                Easily split bills and track expenses with your roommates.
               </p>
             </div>
-          </div>
+          </Link>
+
+          {/* Card 4 - Trusted Match */}
+          <Link
+            to="/roommates"
+            className="bg-gradient-to-br from-purple-500 to-blue-400 dark:from-gray-800 dark:to-gray-700 
+                       rounded-2xl shadow-lg p-6 hover:scale-105 transition-transform duration-300"
+          >
+            <div className="flex flex-col items-center text-white">
+              <div className="bg-white/20 rounded-full p-4 mb-4">
+                <Heart className="w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Trusted Match</h3>
+              <p className="text-sm text-white/90">
+                Verified users ensure a safe and trustworthy roommate search.
+              </p>
+            </div>
+          </Link>
         </div>
       </div>
     </section>

@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Harry Styles",
+    "pfp": "/harry.jpg",
+    "details": "Early Bird, Weekly visitors, Moderate noise level"
+  },
+  {
+    "id": 2,
+    "name": "Simran Makan",
+    "pfp": "/simran.jpg",
+    "details": "Night Owl, Daily visitors, High noise level"
+  },
+  {
+    "id": 3,
+    "name": "Taylor Swift",
+    "pfp": "/taylor.jpg",
+    "details": "Early Bird, Monthly visitors, Low noise level"
+  }
+]
